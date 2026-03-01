@@ -12,6 +12,7 @@ export function RegisterPage() {
   const [username, setUsername] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   return (
@@ -21,6 +22,10 @@ export function RegisterPage() {
         onSubmit={async (e) => {
           e.preventDefault();
           setError(null);
+          if (password !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
+          }
           try {
             await register(username, displayName || username, password);
             navigate("/");
@@ -56,6 +61,15 @@ export function RegisterPage() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="register-confirm-password">Confirm password</Label>
+              <Input
+                id="register-confirm-password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
             <Button type="submit" className="w-full bg-violet-600 text-white hover:bg-violet-700">

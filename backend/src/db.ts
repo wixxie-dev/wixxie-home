@@ -2,7 +2,8 @@ import { Database } from "bun:sqlite";
 import path from "node:path";
 import fs from "node:fs";
 
-const dataDir = path.resolve(process.cwd(), "backend", "data");
+// Resolve from this file so dev/prod work regardless of current working directory.
+const dataDir = path.resolve(import.meta.dir, "..", "data");
 fs.mkdirSync(dataDir, { recursive: true });
 fs.mkdirSync(path.join(dataDir, "uploads"), { recursive: true });
 
@@ -17,6 +18,7 @@ export function initDb() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT NOT NULL UNIQUE,
       display_name TEXT NOT NULL,
+      is_admin INTEGER NOT NULL DEFAULT 0,
       password_hash TEXT NOT NULL,
       created_at TEXT NOT NULL DEFAULT (datetime('now'))
     );
@@ -70,6 +72,23 @@ export function initDb() {
       FOREIGN KEY (service_id) REFERENCES services(id) ON DELETE CASCADE
     );
   `);
+
+  const userColumns = db.query(`PRAGMA table_info(users)`).all() as Array<{ name: string }>;
+  const hasAdminColumn = userColumns.some((column) => column.name === "is_admin");
+  if (!hasAdminColumn) {
+    db.exec(`ALTER TABLE users ADD COLUMN is_admin INTEGER NOT NULL DEFAULT 0`);
+  }
+
+  const adminCountRow = db
+    .prepare(`SELECT COUNT(*) as count FROM users WHERE is_admin = 1`)
+    .get() as { count: number };
+  if (adminCountRow.count === 0) {
+    db.exec(`
+      UPDATE users
+      SET is_admin = 1
+      WHERE id = (SELECT id FROM users ORDER BY id ASC LIMIT 1)
+    `);
+  }
 }
 
 export type DbServiceRow = {

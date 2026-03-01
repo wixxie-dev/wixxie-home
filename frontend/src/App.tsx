@@ -5,6 +5,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { UsersPage } from "./pages/UsersPage";
 import { Layout } from "./components/Layout";
 
 function ProtectedLayout() {
@@ -57,6 +58,7 @@ export default function App() {
           <Route path="/" element={<ProtectedLayout />}>
             <Route index element={<DashboardPage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="users" element={<UsersPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

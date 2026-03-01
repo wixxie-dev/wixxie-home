@@ -7,6 +7,7 @@ import { authRouter } from "./routes/auth.js";
 import { servicesRouter, refreshAllStats } from "./routes/services.js";
 import { tagsRouter } from "./routes/tags.js";
 import { settingsRouter } from "./routes/settings.js";
+import { usersRouter } from "./routes/users.js";
 import { authMiddleware } from "./auth.js";
 import { db, initDb } from "./db.js";
 
@@ -35,18 +36,26 @@ app.use("/api", authMiddleware);
 
 app.get("/api/me", (req, res) => {
   const row = db
-    .prepare(`SELECT id, username, display_name FROM users WHERE id = ?`)
-    .get(req.auth!.userId) as { id: number; username: string; display_name: string } | undefined;
+    .prepare(`SELECT id, username, display_name, is_admin FROM users WHERE id = ?`)
+    .get(req.auth!.userId) as
+    | { id: number; username: string; display_name: string; is_admin: number }
+    | undefined;
 
   if (!row) {
     return res.status(404).json({ error: "User not found" });
   }
-  return res.json({ id: row.id, username: row.username, displayName: row.display_name });
+  return res.json({
+    id: row.id,
+    username: row.username,
+    displayName: row.display_name,
+    isAdmin: row.is_admin === 1,
+  });
 });
 
 app.use("/api/services", servicesRouter);
 app.use("/api/tags", tagsRouter);
 app.use("/api/settings", settingsRouter);
+app.use("/api/users", usersRouter);
 
 const frontendDist = path.resolve(process.cwd(), "frontend", "dist");
 if (fs.existsSync(frontendDist)) {

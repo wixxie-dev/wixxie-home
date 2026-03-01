@@ -23,15 +23,18 @@ authRouter.post("/register", async (req, res) => {
     return res.status(409).json({ error: "Username already exists" });
   }
 
+  const userCountRow = db.prepare(`SELECT COUNT(*) as count FROM users`).get() as { count: number };
+  const isAdmin = userCountRow.count === 0;
+
   const passwordHash = await Bun.password.hash(password, {
     algorithm: "bcrypt",
     cost: 10,
   });
   const insert = db
     .prepare(
-      `INSERT INTO users (username, display_name, password_hash) VALUES (?, ?, ?)`,
+      `INSERT INTO users (username, display_name, is_admin, password_hash) VALUES (?, ?, ?, ?)`,
     )
-    .run(username, displayName, passwordHash);
+    .run(username, displayName, isAdmin ? 1 : 0, passwordHash);
 
   const userId = Number(insert.lastInsertRowid);
   ensureUserSettings(userId);
@@ -43,7 +46,7 @@ authRouter.post("/register", async (req, res) => {
     secure: false,
     maxAge: 14 * 24 * 60 * 60 * 1000,
   });
-  return res.json({ token, user: { id: userId, username, displayName } });
+  return res.json({ token, user: { id: userId, username, displayName, isAdmin } });
 });
 
 authRouter.post("/login", async (req, res) => {
@@ -53,10 +56,42 @@ authRouter.post("/login", async (req, res) => {
     return res.status(400).json({ error: "Username and password are required" });
   }
 
+  const userCountRow = db.prepare(`SELECT COUNT(*) as count FROM users`).get() as { count: number };
+  if (userCountRow.count === 0) {
+    const passwordHash = await Bun.password.hash(password, {
+      algorithm: "bcrypt",
+      cost: 10,
+    });
+    const insert = db
+      .prepare(
+        `INSERT INTO users (username, display_name, is_admin, password_hash) VALUES (?, ?, ?, ?)`,
+      )
+      .run(username, username, 1, passwordHash);
+
+    const userId = Number(insert.lastInsertRowid);
+    ensureUserSettings(userId);
+    const token = signToken({ userId, username });
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: false,
+      maxAge: 14 * 24 * 60 * 60 * 1000,
+    });
+    return res.json({
+      token,
+      user: {
+        id: userId,
+        username,
+        displayName: username,
+        isAdmin: true,
+      },
+    });
+  }
+
   const user = db
-    .prepare(`SELECT id, username, display_name, password_hash FROM users WHERE username = ?`)
+    .prepare(`SELECT id, username, display_name, is_admin, password_hash FROM users WHERE username = ?`)
     .get(username) as
-    | { id: number; username: string; display_name: string; password_hash: string }
+    | { id: number; username: string; display_name: string; is_admin: number; password_hash: string }
     | undefined;
 
   if (!user) {
@@ -78,7 +113,12 @@ authRouter.post("/login", async (req, res) => {
   });
   return res.json({
     token,
-    user: { id: user.id, username: user.username, displayName: user.display_name },
+    user: {
+      id: user.id,
+      username: user.username,
+      displayName: user.display_name,
+      isAdmin: user.is_admin === 1,
+    },
   });
 });
 

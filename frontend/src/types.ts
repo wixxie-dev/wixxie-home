@@ -5,6 +5,11 @@ export type User = {
   id: number;
   username: string;
   displayName: string;
+  isAdmin: boolean;
+};
+
+export type ManagedUser = User & {
+  createdAt: string;
 };
 
 export type Service = {

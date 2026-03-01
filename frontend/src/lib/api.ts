@@ -1,4 +1,4 @@
-import type { Service, Settings, User } from "../types";
+import type { ManagedUser, Service, Settings, User } from "../types";
 
 const API_BASE = "/api";
 const TOKEN_KEY = "wixxie_home_token";
@@ -90,4 +90,16 @@ export const api = {
     }
     return response.json();
   },
+  listUsers: () => request<ManagedUser[]>("/users"),
+  createUser: (payload: {
+    username: string;
+    displayName: string;
+    password: string;
+    isAdmin: boolean;
+  }) => request<ManagedUser>("/users", { method: "POST", body: JSON.stringify(payload) }),
+  updateUser: (
+    id: number,
+    payload: Partial<{ displayName: string; password: string; isAdmin: boolean }>,
+  ) => request<ManagedUser>(`/users/${id}`, { method: "PUT", body: JSON.stringify(payload) }),
+  deleteUser: (id: number) => request<void>(`/users/${id}`, { method: "DELETE" }),
 };

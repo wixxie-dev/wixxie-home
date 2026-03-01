@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { Plus, Settings } from "lucide-react";
+import { Plus, Settings, Users } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { useAuth } from "../lib/auth";
 import { useTheme } from "../lib/theme";
@@ -76,6 +76,19 @@ export function Layout({ title }: Props) {
                 <Settings className="h-4 w-4" />
               </Link>
             </Button>
+            {user?.isAdmin && (
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
+                className="rounded-xl border-zinc-200 bg-white/80 dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-violet-500 dark:hover:text-violet-300"
+                title="Users"
+              >
+                <Link to="/users">
+                  <Users className="h-4 w-4" />
+                </Link>
+              </Button>
+            )}
             {user && (
               <Button
                 type="button"
