@@ -32,12 +32,12 @@ export function ThemeToggle({ onThemeChange }: { onThemeChange?: (theme: ThemeOp
         onClick={() => setOpen((value) => !value)}
         title={`Theme: ${activeItem.label}`}
         aria-label={`Theme: ${activeItem.label}. Click to change.`}
-        className="rounded-xl border-zinc-200 bg-white/80 shadow-sm transition hover:border-violet-300 hover:text-violet-600 dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-violet-500 dark:hover:text-violet-300"
+        className="rounded-xl border-zinc-200/70 bg-white/85 shadow-sm transition hover:border-violet-300 hover:text-violet-600 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-violet-400/70 dark:hover:text-violet-200"
       >
         <ActiveIcon className="h-4 w-4" />
       </Button>
       {open && (
-        <div className="absolute right-0 z-30 mt-2 w-40 rounded-2xl border border-zinc-200 bg-white/95 p-2 shadow-xl dark:border-zinc-700 dark:bg-zinc-900/95">
+        <div className="absolute right-0 z-30 mt-2 w-40 rounded-2xl border border-zinc-200/80 bg-white/95 p-2 shadow-xl dark:border-white/10 dark:bg-slate-950/90">
           {themeItems.map((item) => {
             const Icon = item.icon;
             const isActive = item.id === theme;

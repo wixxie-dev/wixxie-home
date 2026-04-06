@@ -113,7 +113,7 @@ export function Dashboard({
             </div>
           </SortableContext>
           {pinned.length === 0 && (
-            <p className="rounded-2xl border border-dashed border-zinc-300 bg-white/60 p-4 text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900/60">
+            <p className="rounded-2xl border border-dashed border-zinc-300/70 bg-white/60 p-4 text-sm text-zinc-500 backdrop-blur dark:border-white/15 dark:bg-slate-900/65 dark:text-zinc-300">
               Pin services to keep them at the top.
             </p>
           )}
@@ -138,7 +138,7 @@ export function Dashboard({
             </div>
           </SortableContext>
           {regular.length === 0 && (
-            <p className="rounded-2xl border border-dashed border-zinc-300 bg-white/60 p-4 text-sm text-zinc-500 dark:border-zinc-700 dark:bg-zinc-900/60">
+            <p className="rounded-2xl border border-dashed border-zinc-300/70 bg-white/60 p-4 text-sm text-zinc-500 backdrop-blur dark:border-white/15 dark:bg-slate-900/65 dark:text-zinc-300">
               No services match your filters.
             </p>
           )}

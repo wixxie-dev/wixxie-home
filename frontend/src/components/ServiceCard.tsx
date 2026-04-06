@@ -22,14 +22,14 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
     <div
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
-      className="group flex h-full flex-col rounded-2xl border border-zinc-200/70 bg-white/90 p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/10 dark:border-zinc-700 dark:bg-zinc-800"
+      className="group flex h-full flex-col rounded-2xl border border-zinc-200/70 bg-white/88 p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/10 dark:border-white/10 dark:bg-slate-900/72 dark:hover:border-violet-400/35"
     >
       <div className="flex items-start justify-between gap-2">
         <Button
           type="button"
           variant="ghost"
           size="icon"
-          className="h-7 w-7 rounded-xl p-1 text-zinc-500 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-zinc-800 dark:hover:text-violet-300"
+          className="h-7 w-7 rounded-xl p-1 text-zinc-500 hover:bg-zinc-100 hover:text-violet-600 dark:text-zinc-300 dark:hover:bg-slate-800 dark:hover:text-violet-200"
           {...attributes}
           {...listeners}
           aria-label="Drag service"
@@ -50,17 +50,17 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
         >
           <div className="flex items-center gap-2">
             {service.icon ? (
-              <img src={service.icon} alt="" className="h-9 w-9 rounded-xl ring-1 ring-black/5 dark:ring-white/10" />
+              <img src={service.icon} alt="" className="h-9 w-9 rounded-xl ring-1 ring-black/5 dark:ring-white/15" />
             ) : (
-              <div className="h-9 w-9 rounded-xl bg-zinc-200 dark:bg-zinc-700" />
+              <div className="h-9 w-9 rounded-xl bg-zinc-200 dark:bg-slate-700" />
             )}
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-100">{service.name}</p>
+              <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-50">{service.name}</p>
               <div className="mt-1 flex flex-wrap gap-1.5">
                 {service.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-medium text-violet-700 dark:bg-violet-500/20 dark:text-violet-200"
+                    className="rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-medium text-violet-700 dark:bg-violet-500/25 dark:text-violet-100"
                   >
                     {tag}
                   </span>
@@ -76,10 +76,10 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
           {Object.entries(service.stats).map(([key, value]) => (
             <span
               key={key}
-              className="inline-flex items-center gap-1 rounded-xl border border-zinc-200 bg-zinc-50 px-2 py-1 text-[11px] leading-none text-zinc-700 dark:border-zinc-700 dark:bg-zinc-800/80 dark:text-zinc-200"
+              className="inline-flex items-center gap-1 rounded-xl border border-zinc-200 bg-zinc-50 px-2 py-1 text-[11px] leading-none text-zinc-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-zinc-100"
             >
-              <span className="font-medium capitalize text-zinc-500 dark:text-zinc-400">{key}</span>
-              <span className="font-semibold text-violet-700 dark:text-violet-300">{value}</span>
+              <span className="font-medium capitalize text-zinc-500 dark:text-zinc-300">{key}</span>
+              <span className="font-semibold text-violet-700 dark:text-violet-200">{value}</span>
             </span>
           ))}
         </div>
@@ -90,7 +90,7 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
           type="button"
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-zinc-800 dark:hover:text-violet-300"
+          className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-slate-800 dark:hover:text-violet-200"
           onClick={() => onRefresh(service)}
           title="Refresh stats"
         >
@@ -100,8 +100,8 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
           type="button"
           variant="ghost"
           size="icon"
-          className={`h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-zinc-800 dark:hover:text-violet-300 ${
-            service.isPinned ? "text-violet-600 dark:text-violet-300" : ""
+          className={`h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-slate-800 dark:hover:text-violet-200 ${
+            service.isPinned ? "text-violet-600 dark:text-violet-200" : ""
           }`}
           onClick={() => onTogglePinned(service)}
           title="Toggle pin"
@@ -112,7 +112,7 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
           type="button"
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-zinc-800 dark:hover:text-violet-300"
+          className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-slate-800 dark:hover:text-violet-200"
           onClick={() => onEdit(service)}
           title="Edit"
           aria-label="Edit"
@@ -123,7 +123,7 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
           type="button"
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-xl p-1.5 text-red-500 hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-900/20 dark:hover:text-red-300"
+          className="h-8 w-8 rounded-xl p-1.5 text-red-500 hover:bg-red-50 hover:text-red-600 dark:text-red-300 dark:hover:bg-red-900/35 dark:hover:text-red-200"
           onClick={() => onDelete(service)}
           title="Delete"
         >

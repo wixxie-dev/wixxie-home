@@ -20,7 +20,7 @@ function buildSearchUrl(engine: SearchEngine, query: string) {
 
 export function WebSearchBar({ searchEngine }: { searchEngine: SearchEngine }) {
   return (
-    <Card className="rounded-2xl border-zinc-200 bg-white/90 shadow-sm dark:border-zinc-700 dark:bg-zinc-900">
+    <Card className="rounded-2xl border-zinc-200/75 bg-white/90 shadow-sm dark:border-white/10 dark:bg-slate-900/75">
       <CardContent className="p-2">
         <form
           className="flex w-full items-center gap-2"
@@ -35,13 +35,13 @@ export function WebSearchBar({ searchEngine }: { searchEngine: SearchEngine }) {
             window.open(buildSearchUrl(searchEngine, query), "_blank", "noopener,noreferrer");
           }}
         >
-          <Search className="h-4 w-4 text-violet-500" />
+          <Search className="h-4 w-4 text-violet-500 dark:text-violet-300" />
           <Input
             name="web-search"
             placeholder="Search the web..."
             className="h-8 border-0 bg-transparent px-0 py-0 shadow-none focus-visible:ring-0"
           />
-          <span className="rounded-xl bg-violet-100 px-2 py-1 text-[10px] font-medium uppercase tracking-wide text-violet-700 dark:bg-violet-500/20 dark:text-violet-200">
+          <span className="rounded-xl bg-violet-100 px-2 py-1 font-mono text-[10px] font-medium uppercase tracking-wide text-violet-700 dark:bg-violet-500/25 dark:text-violet-100">
             {searchEngine}
           </span>
         </form>

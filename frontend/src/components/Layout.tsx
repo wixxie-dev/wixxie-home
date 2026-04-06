@@ -32,11 +32,11 @@ export function Layout({ title }: Props) {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-20 border-b border-zinc-200/70 bg-white/70 px-4 py-3 backdrop-blur-xl dark:border-zinc-800 dark:bg-zinc-950/90">
+      <header className="sticky top-0 z-20 border-b border-white/60 bg-white/65 px-4 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/55">
         <div className="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3">
           <Link
             to="/"
-            className="bg-gradient-to-r from-violet-600 via-fuchsia-500 to-sky-500 bg-clip-text text-lg font-bold tracking-tight text-transparent"
+            className="bg-gradient-to-r from-violet-500 via-fuchsia-400 to-cyan-300 bg-clip-text text-lg font-extrabold tracking-tight text-transparent"
           >
             {title}
           </Link>
@@ -53,7 +53,7 @@ export function Layout({ title }: Props) {
             {isDashboard && (
               <Button
                 type="button"
-                className="rounded-xl bg-violet-600 text-white shadow-lg shadow-violet-500/30 transition hover:-translate-y-0.5 hover:bg-violet-500"
+                className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/25 transition hover:-translate-y-0.5 hover:from-violet-500 hover:to-fuchsia-500"
                 onClick={() => window.dispatchEvent(new Event("wixxie:add-service"))}
               >
                 <Plus className="h-4 w-4" />
@@ -69,7 +69,7 @@ export function Layout({ title }: Props) {
               asChild
               variant="outline"
               size="icon"
-              className="rounded-xl border-zinc-200 bg-white/80 dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-violet-500 dark:hover:text-violet-300"
+              className="rounded-xl border-zinc-200/70 bg-white/85 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-violet-400/70 dark:hover:text-violet-200"
               title="Settings"
             >
               <Link to="/settings">
@@ -81,7 +81,7 @@ export function Layout({ title }: Props) {
                 asChild
                 variant="outline"
                 size="icon"
-                className="rounded-xl border-zinc-200 bg-white/80 dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-violet-500 dark:hover:text-violet-300"
+                className="rounded-xl border-zinc-200/70 bg-white/85 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-violet-400/70 dark:hover:text-violet-200"
                 title="Users"
               >
                 <Link to="/users">
@@ -93,7 +93,7 @@ export function Layout({ title }: Props) {
               <Button
                 type="button"
                 variant="outline"
-                className="rounded-xl border-zinc-200 bg-white/80 shadow-sm transition hover:border-red-300 hover:text-red-500 dark:border-zinc-700 dark:bg-zinc-900/80 dark:hover:border-red-500/60 dark:hover:text-red-300"
+                className="rounded-xl border-zinc-200/70 bg-white/85 shadow-sm transition hover:border-red-300 hover:text-red-500 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-red-400/70 dark:hover:text-red-200"
                 onClick={logout}
               >
                 Log out
