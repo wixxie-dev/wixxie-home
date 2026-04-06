@@ -95,7 +95,7 @@ export function Dashboard({
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <section className="space-y-6">
         <div className="space-y-2">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-300">
             Pinned
           </h2>
           <SortableContext items={pinned.map((s) => s.id)} strategy={rectSortingStrategy}>
@@ -113,14 +113,14 @@ export function Dashboard({
             </div>
           </SortableContext>
           {pinned.length === 0 && (
-            <p className="rounded-2xl border border-dashed border-zinc-300/70 bg-white/60 p-4 text-sm text-zinc-500 backdrop-blur dark:border-white/15 dark:bg-slate-900/65 dark:text-zinc-300">
+            <p className="rounded-2xl border border-dashed border-zinc-300/70 bg-white/60 p-4 text-sm text-zinc-500 backdrop-blur dark:border-slate-700/90 dark:bg-slate-900/90 dark:text-zinc-300">
               Pin services to keep them at the top.
             </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-400">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 dark:text-zinc-300">
             All Services
           </h2>
           <SortableContext items={regular.map((s) => s.id)} strategy={rectSortingStrategy}>
@@ -138,7 +138,7 @@ export function Dashboard({
             </div>
           </SortableContext>
           {regular.length === 0 && (
-            <p className="rounded-2xl border border-dashed border-zinc-300/70 bg-white/60 p-4 text-sm text-zinc-500 backdrop-blur dark:border-white/15 dark:bg-slate-900/65 dark:text-zinc-300">
+            <p className="rounded-2xl border border-dashed border-zinc-300/70 bg-white/60 p-4 text-sm text-zinc-500 backdrop-blur dark:border-slate-700/90 dark:bg-slate-900/90 dark:text-zinc-300">
               No services match your filters.
             </p>
           )}

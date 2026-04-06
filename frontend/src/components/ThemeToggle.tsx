@@ -32,12 +32,12 @@ export function ThemeToggle({ onThemeChange }: { onThemeChange?: (theme: ThemeOp
         onClick={() => setOpen((value) => !value)}
         title={`Theme: ${activeItem.label}`}
         aria-label={`Theme: ${activeItem.label}. Click to change.`}
-        className="rounded-xl border-zinc-200/70 bg-white/85 shadow-sm transition hover:border-violet-300 hover:text-violet-600 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-violet-400/70 dark:hover:text-violet-200"
+        className="rounded-xl border-zinc-200/70 bg-white/85 shadow-sm transition hover:border-orange-300 hover:text-orange-700 dark:border-slate-700 dark:bg-slate-800/85 dark:hover:border-amber-300/70 dark:hover:bg-slate-800 dark:hover:text-amber-100"
       >
         <ActiveIcon className="h-4 w-4" />
       </Button>
       {open && (
-        <div className="absolute right-0 z-30 mt-2 w-40 rounded-2xl border border-zinc-200/80 bg-white/95 p-2 shadow-xl dark:border-white/10 dark:bg-slate-950/90">
+        <div className="absolute right-0 z-30 mt-2 w-40 rounded-2xl border border-zinc-200/80 bg-white/95 p-2 shadow-xl dark:border-slate-700 dark:bg-slate-900/95">
           {themeItems.map((item) => {
             const Icon = item.icon;
             const isActive = item.id === theme;
@@ -48,7 +48,7 @@ export function ThemeToggle({ onThemeChange }: { onThemeChange?: (theme: ThemeOp
                 variant="ghost"
                 className={`w-full justify-start rounded-xl px-3 py-2 text-sm ${
                   isActive
-                    ? "bg-violet-100 text-violet-700 hover:bg-violet-100 dark:bg-violet-500/20 dark:text-violet-200 dark:hover:bg-violet-500/20"
+                    ? "bg-orange-100 text-orange-700 hover:bg-orange-100 dark:bg-amber-500/20 dark:text-amber-100 dark:hover:bg-amber-500/20"
                     : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 }`}
                 onClick={() => {

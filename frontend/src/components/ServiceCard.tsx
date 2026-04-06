@@ -1,6 +1,7 @@
 import { CSS } from "@dnd-kit/utilities";
 import { useSortable } from "@dnd-kit/sortable";
-import { GripVertical, PenSquare, Pin, RefreshCw, Trash2 } from "lucide-react";
+import { GripVertical, MoreHorizontal, PenSquare, Pin, RefreshCw, Trash2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import type { Service } from "../types";
 import { Button } from "@/components/ui/button";
 
@@ -17,19 +18,39 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
     id: service.id,
     data: { section: service.isPinned ? "pinned" : "regular" },
   });
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
 
   return (
     <div
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
-      className="group flex h-full flex-col rounded-2xl border border-zinc-200/70 bg-white/88 p-3 shadow-sm transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/10 dark:border-white/10 dark:bg-slate-900/72 dark:hover:border-violet-400/35"
+      className={`group flex h-full flex-col rounded-2xl border border-zinc-300/80 bg-gradient-to-b from-white to-orange-50/35 p-3 shadow-[0_10px_22px_rgba(15,23,42,0.08)] ring-1 ring-orange-100/60 transition hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(249,115,22,0.14)] dark:border-slate-700/80 dark:bg-slate-900/92 dark:shadow-[0_14px_30px_rgba(2,6,23,0.45)] dark:ring-0 dark:hover:border-amber-300/35 ${
+        menuOpen ? "z-30" : "z-0"
+      }`}
     >
       <div className="flex items-start justify-between gap-2">
         <Button
           type="button"
           variant="ghost"
           size="icon"
-          className="h-7 w-7 rounded-xl p-1 text-zinc-500 hover:bg-zinc-100 hover:text-violet-600 dark:text-zinc-300 dark:hover:bg-slate-800 dark:hover:text-violet-200"
+          className="h-7 w-7 rounded-xl p-1 text-zinc-500 hover:bg-orange-50 hover:text-orange-700 dark:text-zinc-300 dark:hover:bg-slate-800 dark:hover:text-amber-100"
           {...attributes}
           {...listeners}
           aria-label="Drag service"
@@ -50,7 +71,11 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
         >
           <div className="flex items-center gap-2">
             {service.icon ? (
-              <img src={service.icon} alt="" className="h-9 w-9 rounded-xl ring-1 ring-black/5 dark:ring-white/15" />
+              <img
+                src={service.icon}
+                alt=""
+                className="h-9 w-9 rounded-xl ring-1 ring-zinc-200 shadow-sm dark:ring-white/15 dark:shadow-none"
+              />
             ) : (
               <div className="h-9 w-9 rounded-xl bg-zinc-200 dark:bg-slate-700" />
             )}
@@ -60,7 +85,7 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
                 {service.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-violet-100 px-2 py-0.5 text-[10px] font-medium text-violet-700 dark:bg-violet-500/25 dark:text-violet-100"
+                    className="rounded-full bg-orange-100 px-2 py-0.5 text-[10px] font-medium text-orange-700 dark:bg-amber-500/25 dark:text-amber-100"
                   >
                     {tag}
                   </span>
@@ -72,25 +97,25 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
       </div>
 
       {service.stats && (
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        <div className="mt-2 mb-2 flex flex-wrap gap-1.5">
           {Object.entries(service.stats).map(([key, value]) => (
             <span
               key={key}
-              className="inline-flex items-center gap-1 rounded-xl border border-zinc-200 bg-zinc-50 px-2 py-1 text-[11px] leading-none text-zinc-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-zinc-100"
+              className="inline-flex items-center gap-1 rounded-xl border border-zinc-300 bg-white px-2 py-1 text-[11px] leading-none text-zinc-700 shadow-sm dark:border-slate-700 dark:bg-slate-800/90 dark:text-zinc-100 dark:shadow-none"
             >
               <span className="font-medium capitalize text-zinc-500 dark:text-zinc-300">{key}</span>
-              <span className="font-semibold text-violet-700 dark:text-violet-200">{value}</span>
+              <span className="font-semibold text-orange-700 dark:text-amber-100">{value}</span>
             </span>
           ))}
         </div>
       )}
 
-      <div className="mt-auto flex items-center justify-end gap-1 pt-3">
+      <div className="mt-auto flex items-center justify-end gap-1 border-t border-zinc-200/85 pt-3 dark:border-slate-700/80">
         <Button
           type="button"
           variant="ghost"
           size="icon"
-          className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-slate-800 dark:hover:text-violet-200"
+          className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-orange-700 dark:hover:bg-slate-800 dark:hover:text-amber-100"
           onClick={() => onRefresh(service)}
           title="Refresh stats"
         >
@@ -100,35 +125,56 @@ export function ServiceCard({ service, onEdit, onDelete, onTogglePinned, onRefre
           type="button"
           variant="ghost"
           size="icon"
-          className={`h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-slate-800 dark:hover:text-violet-200 ${
-            service.isPinned ? "text-violet-600 dark:text-violet-200" : ""
+          className={`h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-orange-700 dark:hover:bg-slate-800 dark:hover:text-amber-100 ${
+            service.isPinned ? "text-orange-700 dark:text-amber-100" : ""
           }`}
           onClick={() => onTogglePinned(service)}
           title="Toggle pin"
         >
           <Pin className={`h-4 w-4 ${service.isPinned ? "fill-current" : ""}`} />
         </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-violet-600 dark:hover:bg-slate-800 dark:hover:text-violet-200"
-          onClick={() => onEdit(service)}
-          title="Edit"
-          aria-label="Edit"
-        >
-          <PenSquare className="h-4 w-4" />
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 rounded-xl p-1.5 text-red-500 hover:bg-red-50 hover:text-red-600 dark:text-red-300 dark:hover:bg-red-900/35 dark:hover:text-red-200"
-          onClick={() => onDelete(service)}
-          title="Delete"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+        <div ref={menuRef} className="relative">
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 rounded-xl p-1.5 hover:bg-zinc-100 hover:text-orange-700 dark:hover:bg-slate-800 dark:hover:text-amber-100"
+            onClick={() => setMenuOpen((prev) => !prev)}
+            title="More actions"
+            aria-label="More actions"
+            aria-expanded={menuOpen}
+          >
+            <MoreHorizontal className="h-4 w-4" />
+          </Button>
+          {menuOpen && (
+            <div className="absolute right-0 z-50 mt-1 w-36 rounded-xl border border-zinc-200 bg-white p-1 shadow-lg dark:border-slate-700 dark:bg-slate-900">
+              <Button
+                type="button"
+                variant="ghost"
+                className="h-8 w-full justify-start rounded-lg px-2 text-zinc-700 hover:bg-zinc-100 hover:text-orange-700 dark:text-zinc-100 dark:hover:bg-slate-800 dark:hover:text-amber-100"
+                onClick={() => {
+                  onEdit(service);
+                  setMenuOpen(false);
+                }}
+              >
+                <PenSquare className="h-4 w-4" />
+                Edit
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                className="h-8 w-full justify-start rounded-lg px-2 text-red-600 hover:bg-red-50 hover:text-red-700 dark:text-red-300 dark:hover:bg-red-900/35 dark:hover:text-red-200"
+                onClick={() => {
+                  onDelete(service);
+                  setMenuOpen(false);
+                }}
+              >
+                <Trash2 className="h-4 w-4" />
+                Delete
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

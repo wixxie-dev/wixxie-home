@@ -49,14 +49,14 @@ export function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <Button type="submit" className="w-full bg-violet-600 text-white hover:bg-violet-700">
+            <Button type="submit" className="w-full bg-orange-600 text-white hover:bg-orange-700">
               Sign in
             </Button>
             <p className="text-sm text-zinc-500">
               Need an account?{" "}
               <Link
                 to="/register"
-                className="text-violet-600 hover:text-violet-700 dark:text-violet-300 dark:hover:text-violet-200"
+                className="text-orange-700 hover:text-orange-800 dark:text-amber-200 dark:hover:text-amber-100"
               >
                 Register
               </Link>

@@ -12,7 +12,13 @@ function ProtectedLayout() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center p-6">
+        <div className="rounded-2xl border border-zinc-200/70 bg-white/85 px-5 py-3 text-sm font-medium text-zinc-700 shadow-sm backdrop-blur dark:border-white/15 dark:bg-slate-900/75 dark:text-zinc-200">
+          Loading your dashboard...
+        </div>
+      </div>
+    );
   }
 
   if (!user) {
@@ -25,7 +31,13 @@ function ProtectedLayout() {
 function PublicOnly({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return (
+      <div className="flex min-h-screen items-center justify-center p-6">
+        <div className="rounded-2xl border border-zinc-200/70 bg-white/85 px-5 py-3 text-sm font-medium text-zinc-700 shadow-sm backdrop-blur dark:border-white/15 dark:bg-slate-900/75 dark:text-zinc-200">
+          Loading your dashboard...
+        </div>
+      </div>
+    );
   }
   if (user) {
     return <Navigate to="/" replace />;

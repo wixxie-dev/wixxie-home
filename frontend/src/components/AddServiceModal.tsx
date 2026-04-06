@@ -246,7 +246,7 @@ export function AddServiceModal({
               });
               onClose();
             }}
-            className="bg-violet-600 shadow-lg shadow-violet-500/25 hover:bg-violet-700"
+            className="bg-orange-600 shadow-lg shadow-orange-500/25 hover:bg-orange-700"
           >
             Save
           </Button>

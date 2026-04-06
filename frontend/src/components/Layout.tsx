@@ -32,11 +32,11 @@ export function Layout({ title }: Props) {
 
   return (
     <div className="min-h-screen">
-      <header className="sticky top-0 z-20 border-b border-white/60 bg-white/65 px-4 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-slate-950/55">
+      <header className="sticky top-0 z-20 border-b border-white/60 bg-white/65 px-4 py-3 backdrop-blur-xl dark:border-amber-100/10 dark:bg-slate-950/85 dark:shadow-[0_1px_0_rgba(251,191,36,0.12)]">
         <div className="mx-auto grid max-w-7xl grid-cols-[auto_1fr_auto] items-center gap-3">
           <Link
             to="/"
-            className="bg-gradient-to-r from-violet-500 via-fuchsia-400 to-cyan-300 bg-clip-text text-lg font-extrabold tracking-tight text-transparent"
+            className="bg-gradient-to-r from-orange-500 via-amber-400 to-yellow-300 bg-clip-text text-lg font-extrabold tracking-tight text-transparent dark:from-amber-200 dark:via-orange-200 dark:to-yellow-100"
           >
             {title}
           </Link>
@@ -53,7 +53,7 @@ export function Layout({ title }: Props) {
             {isDashboard && (
               <Button
                 type="button"
-                className="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow-lg shadow-violet-500/25 transition hover:-translate-y-0.5 hover:from-violet-500 hover:to-fuchsia-500"
+                className="rounded-xl bg-gradient-to-r from-orange-600 to-amber-500 text-white shadow-lg shadow-orange-500/25 transition hover:-translate-y-0.5 hover:from-orange-500 hover:to-amber-400"
                 onClick={() => window.dispatchEvent(new Event("wixxie:add-service"))}
               >
                 <Plus className="h-4 w-4" />
@@ -69,7 +69,7 @@ export function Layout({ title }: Props) {
               asChild
               variant="outline"
               size="icon"
-              className="rounded-xl border-zinc-200/70 bg-white/85 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-violet-400/70 dark:hover:text-violet-200"
+              className="rounded-xl border-zinc-200/70 bg-white/85 dark:border-slate-700 dark:bg-slate-800/85 dark:hover:border-amber-300/70 dark:hover:bg-slate-800 dark:hover:text-amber-100"
               title="Settings"
             >
               <Link to="/settings">
@@ -81,7 +81,7 @@ export function Layout({ title }: Props) {
                 asChild
                 variant="outline"
                 size="icon"
-                className="rounded-xl border-zinc-200/70 bg-white/85 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-violet-400/70 dark:hover:text-violet-200"
+                className="rounded-xl border-zinc-200/70 bg-white/85 dark:border-slate-700 dark:bg-slate-800/85 dark:hover:border-amber-300/70 dark:hover:bg-slate-800 dark:hover:text-amber-100"
                 title="Users"
               >
                 <Link to="/users">
@@ -93,7 +93,7 @@ export function Layout({ title }: Props) {
               <Button
                 type="button"
                 variant="outline"
-                className="rounded-xl border-zinc-200/70 bg-white/85 shadow-sm transition hover:border-red-300 hover:text-red-500 dark:border-white/15 dark:bg-slate-900/70 dark:hover:border-red-400/70 dark:hover:text-red-200"
+                className="rounded-xl border-zinc-200/70 bg-white/85 shadow-sm transition hover:border-red-300 hover:text-red-500 dark:border-slate-700 dark:bg-slate-800/85 dark:hover:border-red-400/70 dark:hover:bg-slate-800 dark:hover:text-red-200"
                 onClick={logout}
               >
                 Log out

@@ -124,13 +124,13 @@ export function FancyTagInput({ selectedTags, options, onChange }: Props) {
   return (
     <div ref={containerRef} className="relative">
       <div
-        className="flex min-h-11 flex-wrap items-center gap-2 rounded-2xl border border-input bg-background px-3 py-2 shadow-sm transition focus-within:border-violet-400 focus-within:ring-1 focus-within:ring-violet-400/20 dark:border-zinc-600 dark:bg-zinc-900/50"
+        className="flex min-h-11 flex-wrap items-center gap-2 rounded-2xl border border-input bg-background px-3 py-2 shadow-sm transition focus-within:border-orange-400 focus-within:ring-1 focus-within:ring-orange-400/25 dark:border-zinc-600 dark:bg-zinc-900/50"
         onClick={() => setOpen(true)}
       >
         {selectedTags.map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 rounded-full bg-violet-100 px-2.5 py-1 text-xs font-medium text-violet-700 dark:bg-violet-500/20 dark:text-violet-200"
+            className="inline-flex items-center gap-1 rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-700 dark:bg-amber-500/20 dark:text-amber-100"
           >
             {tag}
             <Button
@@ -142,7 +142,7 @@ export function FancyTagInput({ selectedTags, options, onChange }: Props) {
                 e.stopPropagation();
                 removeTag(tag);
               }}
-              className="h-4 w-4 rounded-full p-0 hover:bg-violet-200/50 dark:hover:bg-violet-500/30"
+              className="h-4 w-4 rounded-full p-0 hover:bg-orange-200/60 dark:hover:bg-amber-500/35"
             >
               <X className="h-3 w-3" />
             </Button>
@@ -184,7 +184,7 @@ export function FancyTagInput({ selectedTags, options, onChange }: Props) {
                 aria-selected={i === highlightIndex}
                 className={`cursor-pointer px-3 py-2 text-sm ${
                   i === highlightIndex
-                    ? "bg-violet-100 text-violet-900 dark:bg-violet-500/20 dark:text-violet-100"
+                    ? "bg-orange-100 text-orange-900 dark:bg-amber-500/20 dark:text-amber-100"
                     : "text-foreground hover:bg-accent"
                 }`}
                 onMouseEnter={() => setHighlightIndex(i)}

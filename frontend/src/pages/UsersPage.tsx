@@ -237,7 +237,7 @@ export function UsersPage() {
               <Button
                 type="submit"
                 disabled={creating}
-                className="bg-violet-600 text-white hover:bg-violet-700"
+                className="bg-orange-600 text-white hover:bg-orange-700"
               >
                 {creating ? "Creating..." : "Create user"}
               </Button>
@@ -340,7 +340,7 @@ export function UsersPage() {
                       onClick={() => {
                         onSaveUser(listedUser).catch(() => {});
                       }}
-                      className="bg-violet-600 text-white hover:bg-violet-700"
+                      className="bg-orange-600 text-white hover:bg-orange-700"
                     >
                       Save changes
                     </Button>
