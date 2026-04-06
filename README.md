@@ -71,7 +71,6 @@ services:
       - .env
     ports:
       - "80:3000"
-      - "443:3000"
     environment:
       - PORT=${PORT:-3000}
       - POLL_INTERVAL_MS=${POLL_INTERVAL_MS:-300000}
