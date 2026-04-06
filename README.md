@@ -9,38 +9,11 @@ A Bun-based homelab landing dashboard with:
 - Dark/light/system theme
 - Settings page for default web search engine, site tab title, and custom favicon upload
 
-## Local Development
+## Docs
 
-Requirements:
-
-- Bun 1.3+
-
-Install dependencies:
-
-```bash
-bun install
-```
-
-Run backend and frontend in dev mode:
-
-```bash
-bun run dev
-```
-
-- Frontend: `http://localhost:5173`
-- Backend API: `http://localhost:3000`
-
-## Build
-
-```bash
-bun run build
-```
-
-Run production backend (serves frontend build from `frontend/dist`):
-
-```bash
-bun run start
-```
+- User/deploy guide: `README.md`
+- Development guide: `docs/dev.md`
+- CI and release guide: `docs/release-ci.md`
 
 ## Docker
 
@@ -108,53 +81,15 @@ services:
 
 If you need HTTPS, terminate TLS at a reverse proxy (for example Caddy, Traefik, or Nginx) and proxy to this container over HTTP on port `3000`. Mapping `443` directly to this container will trigger warnings because the app does not serve TLS by itself.
 
-## CI and release automation
+## Maintainer Docs
 
-This repository includes three GitHub Actions workflows:
+For CI, release workflow behavior, and tag strategy, see:
 
-- `CI` (`.github/workflows/ci.yml`)
-  - Runs on pull requests and pushes to `main`
-  - Installs dependencies and runs `bun run build`
-- `Release` (`.github/workflows/release.yml`)
-  - Runs on version tags like `v1.2.3`
-  - Builds and pushes only the matching version tag to GHCR (immutable release tag pattern)
-  - Creates a GitHub Release with generated notes
-- `Publish Latest` (`.github/workflows/publish-latest.yml`)
-  - Runs on pushes to `main`
-  - Builds and pushes only `ghcr.io/wixxie-dev/wixxie-home:latest`
-
-### Create a release
-
-1. Merge your changes to `main`
-2. Create and push a semantic version tag:
-
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-```
-
-3. Wait for the `Release` workflow to finish
-4. Pull the new tag in deployment environments by setting `WIXXIE_TAG`
-
-### Tag immutability pattern
-
-- `latest` is only published from `main`
-- Version tags (`vX.Y.Z`) are only published from git tags
-- This avoids accidental overwrite of release tags during normal branch pushes
-
-### GHCR permissions notes
-
-- Workflow uses `GITHUB_TOKEN` to push image and create release
-- Repository workflow permissions must allow:
-  - `contents: write`
-  - `packages: write`
+- `docs/release-ci.md`
 
 ## Environment Variables
 
-- `PORT` (default `3000`)
-- `POLL_INTERVAL_MS` (default `300000`)
-- `JWT_SECRET` (required in production)
-- `DISABLE_REGISTRATION` (`true` or `false`)
+For full development and runtime env var details, see `docs/dev.md`.
 
 ## Notes
 
