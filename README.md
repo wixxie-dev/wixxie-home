@@ -40,16 +40,16 @@ The compose file is set up to pull a published image from GitHub Container Regis
 - `ghcr.io/wixxie-dev/wixxie-home:latest`
 - `ghcr.io/wixxie-dev/wixxie-home:vX.Y.Z`
 
-Required environment variables:
+Create a local env file from the template:
 
 ```bash
-export JWT_SECRET="replace-this-with-a-strong-secret"
+cp .env.example .env
 ```
 
-Optional deployment image tag (defaults to `latest`):
+Edit `.env` and set at least:
 
 ```bash
-export WIXXIE_TAG="v0.1.0"
+JWT_SECRET=replace-this-with-a-strong-secret
 ```
 
 Pull and run:
@@ -67,13 +67,16 @@ services:
     image: ghcr.io/wixxie-dev/wixxie-home:${WIXXIE_TAG:-latest}
     container_name: wixxie-home
     pull_policy: always
+    env_file:
+      - .env
     ports:
       - "80:3000"
+      - "443:3000"
     environment:
-      - PORT=3000
-      - POLL_INTERVAL_MS=300000
+      - PORT=${PORT:-3000}
+      - POLL_INTERVAL_MS=${POLL_INTERVAL_MS:-300000}
       - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
-      - DISABLE_REGISTRATION=false
+      - DISABLE_REGISTRATION=${DISABLE_REGISTRATION:-false}
     volumes:
       - ./backend/data:/app/backend/data
     restart: unless-stopped
