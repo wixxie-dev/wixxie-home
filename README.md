@@ -44,10 +44,11 @@ bun run start
 
 ## Docker
 
-Build and run:
+Run using Docker Compose:
 
 ```bash
-docker compose up -d --build
+docker compose pull
+docker compose up -d
 ```
 
 Dashboard will be available at:
@@ -60,11 +61,69 @@ Data is persisted to:
 - SQLite DB: `backend/data/wixxie-home.db`
 - Uploaded favicons/icons: `backend/data/uploads/`
 
+## Deploy with GHCR image
+
+The compose file is set up to pull a published image from GitHub Container Registry:
+
+- `ghcr.io/wixxie-dev/wixxie-home:latest`
+- `ghcr.io/wixxie-dev/wixxie-home:vX.Y.Z`
+
+Required environment variables:
+
+```bash
+export JWT_SECRET="replace-this-with-a-strong-secret"
+```
+
+Optional deployment image tag (defaults to `latest`):
+
+```bash
+export WIXXIE_TAG="v0.1.0"
+```
+
+Pull and run:
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+## CI and release automation
+
+This repository includes two GitHub Actions workflows:
+
+- `CI` (`.github/workflows/ci.yml`)
+  - Runs on pull requests and pushes to `main`
+  - Installs dependencies and runs `bun run build`
+- `Release` (`.github/workflows/release.yml`)
+  - Runs on version tags like `v1.2.3`
+  - Builds and pushes Docker image to GHCR
+  - Creates a GitHub Release with generated notes
+
+### Create a release
+
+1. Merge your changes to `main`
+2. Create and push a semantic version tag:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+3. Wait for the `Release` workflow to finish
+4. Pull the new tag in deployment environments by setting `WIXXIE_TAG`
+
+### GHCR permissions notes
+
+- Workflow uses `GITHUB_TOKEN` to push image and create release
+- Repository workflow permissions must allow:
+  - `contents: write`
+  - `packages: write`
+
 ## Environment Variables
 
 - `PORT` (default `3000`)
 - `POLL_INTERVAL_MS` (default `300000`)
-- `JWT_SECRET` (set this in production)
+- `JWT_SECRET` (required in production)
 - `DISABLE_REGISTRATION` (`true` or `false`)
 
 ## Notes

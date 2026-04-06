@@ -1,14 +1,15 @@
 services:
   wixxie-home:
-    build: .
+    image: ghcr.io/wixxie-dev/wixxie-home:${WIXXIE_TAG:-latest}
     container_name: wixxie-home
+    pull_policy: always
     ports:
       - "80:3000"
       - "443:3000"
     environment:
       - PORT=3000
       - POLL_INTERVAL_MS=300000
-      - JWT_SECRET=change-this-secret
+      - JWT_SECRET=${JWT_SECRET:?JWT_SECRET is required}
       - DISABLE_REGISTRATION=false
     volumes:
       - ./backend/data:/app/backend/data
