@@ -11,6 +11,13 @@
     "dev:frontend": "bun run --filter frontend dev",
     "dev:backend": "bun run --filter backend dev",
     "build": "bun run --filter frontend build && bun run --filter backend build",
-    "start": "bun run --filter backend start"
+    "start": "bun run --filter backend start",
+    "prepare": "husky",
+    "lint:commitmsg": "commitlint --from HEAD~1 --to HEAD"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
+    "husky": "^9.1.7"
   }
 }

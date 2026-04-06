@@ -1,0 +1,26 @@
+---
+description: Use Conventional Commit message format
+alwaysApply: true
+---
+
+# Conventional Commit Messages
+
+When generating commit messages, always use Conventional Commits:
+
+- `feat:` for new user-facing features (minor bump)
+- `fix:` for bug fixes (patch bump)
+- `docs:` for documentation-only changes
+- `chore:` for maintenance/config updates
+- `refactor:` for behavior-preserving refactors
+- `test:` for test-only changes
+
+Breaking changes:
+
+- Use `feat!:` (or another type with `!`) for breaking changes
+- Include a `BREAKING CHANGE:` footer in the commit body when relevant
+
+Examples:
+
+- `feat: add release automation with release please`
+- `fix: correct GHCR image name for compose deployments`
+- `docs: clarify staging versus production image tags`
